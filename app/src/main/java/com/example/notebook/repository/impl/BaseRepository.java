@@ -1,6 +1,7 @@
 package com.example.notebook.repository.impl;
 
 import android.os.Build;
+import androidx.annotation.RequiresApi;
 import com.example.notebook.model.Note;
 import com.example.notebook.repository.NoteRepository;
 
@@ -14,9 +15,11 @@ public class BaseRepository implements NoteRepository {
     private List<Note> notes;
     private int id;
 
+
     private BaseRepository() {
         notes = new ArrayList<>();
     }
+
 
     public static BaseRepository getInstance() {
         if (baseRepository != null) {
@@ -25,33 +28,44 @@ public class BaseRepository implements NoteRepository {
         return new BaseRepository();
     }
 
-
     @Override
     public List<Note> getAll() {
-        return new ArrayList<>(notes);
+        return notes;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void delete(int id) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            notes.removeIf((note -> note.getId() == id));
-        }
+        notes.removeIf((note -> note.getId() == id));
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public boolean addNote(Note note) {
-        note.setId(id++);
-        notes.add(note);
+    public boolean addNote(Note note, Note currentNote) {
+        if (currentNote != null) {
+            int id = currentNote.getId();
+            notes.stream()
+                    .filter(n -> n.getId() == currentNote.getId())
+                    .forEach(n -> {
+                        n.setName(note.getName());
+                        n.setDescription(note.getDescription());
+                        n.setEventTime(note.getEventTime());
+                    });
+            note.setId(id);
+        } else {
+            note.setId(id++);
+            notes.add(note);
+        }
         return true;
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public List<Note> findNote(String noteName) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.N) {
-            return notes.stream()
-                    .filter(note -> note.getName().equals(noteName))
-                    .collect(Collectors.toList());
-        }
-        return null;
+    public List<Note> findNotes(String noteName) {
+
+        return notes.stream()
+                .filter(note -> note.getName().contains(noteName))
+                .collect(Collectors.toList());
+
     }
 }

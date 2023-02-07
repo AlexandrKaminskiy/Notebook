@@ -19,7 +19,7 @@ public class FileBasedNoteRepository implements NoteRepository {
     }
 
     @Override
-    public boolean addNote(Note note) {
+    public boolean addNote(Note note, Note currentNote) {
 
         try (FileOutputStream outputStream = new FileOutputStream("notes", true);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {
@@ -33,7 +33,7 @@ public class FileBasedNoteRepository implements NoteRepository {
     }
 
     @Override
-    public List<Note> findNote(String noteName) {
+    public List<Note> findNotes(String noteName) {
         return null;
     }
 }
