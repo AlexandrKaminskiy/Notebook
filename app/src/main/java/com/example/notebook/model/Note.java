@@ -1,12 +1,11 @@
 package com.example.notebook.model;
 
-import androidx.annotation.NonNull;
-import lombok.*;
-import org.jetbrains.annotations.NotNull;
+import lombok.Getter;
+import lombok.NoArgsConstructor;
+import lombok.Setter;
 
 import java.io.Serializable;
 import java.time.LocalDate;
-import java.time.LocalDateTime;
 
 @NoArgsConstructor
 @Getter

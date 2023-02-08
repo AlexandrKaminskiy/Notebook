@@ -3,7 +3,6 @@ package com.example.notebook.service;
 import android.widget.ArrayAdapter;
 import com.example.notebook.model.Note;
 import com.example.notebook.repository.NoteRepository;
-import com.example.notebook.repository.impl.BaseRepository;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -34,8 +33,8 @@ public class NoteService {
         this.adapter = adapter;
     }
 
-    public List<Note> getAll() {
-        return new ArrayList<>(noteRepository.getAll());
+    public List<Note> getAll(boolean onStartup) {
+        return new ArrayList<>(noteRepository.getAll(onStartup));
     }
 
     public void delete(int id) {
@@ -52,4 +51,5 @@ public class NoteService {
     public List<Note> findNotes(String noteName) {
         return noteRepository.findNotes(noteName);
     }
+
 }

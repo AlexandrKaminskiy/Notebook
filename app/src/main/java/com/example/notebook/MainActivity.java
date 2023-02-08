@@ -2,18 +2,18 @@ package com.example.notebook;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
-import android.database.Cursor;
-import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
-import android.widget.*;
+import android.os.Bundle;
+import android.widget.ArrayAdapter;
+import android.widget.Button;
+import android.widget.ListView;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.example.notebook.adapter.NoteAdapter;
 import com.example.notebook.listener.TextChangeListener;
 import com.example.notebook.model.Note;
-import com.example.notebook.repository.impl.BaseRepository;
-import com.example.notebook.repository.impl.SqlRepository;
+import com.example.notebook.repository.NoteRepository;
+import com.example.notebook.repository.impl.FileBasedNoteRepository;
 import com.example.notebook.service.NoteService;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -25,9 +25,13 @@ public class MainActivity extends AppCompatActivity {
     private Button addButton;
     private NoteService noteService;
     private TextInputEditText findTextInput;
+    private NoteRepository noteRepository;
+    private boolean onStartup;
 
     public MainActivity() {
+        onStartup = true;
         noteService = NoteService.getInstance();
+        noteRepository = new FileBasedNoteRepository(getBaseContext());
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -39,8 +43,10 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         addButton = findViewById(R.id.addButton);
         findTextInput = findViewById(R.id.findTextInput);
-        noteService.setNoteRepository(new SqlRepository(new BaseRepository(), getBaseContext()));
-        List<Note> list = noteService.getAll();
+        noteRepository = new FileBasedNoteRepository(getBaseContext());
+        noteService.setNoteRepository(noteRepository);
+        List<Note> list = noteService.getAll(onStartup);
+        onStartup = false;
         ArrayAdapter<Note> adapter = new NoteAdapter(this,
                 android.R.layout.simple_list_item_1, list);
 
@@ -62,6 +68,4 @@ public class MainActivity extends AppCompatActivity {
             startActivity(intent);
         });
     }
-
-
 }

@@ -8,20 +8,17 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import com.example.notebook.model.Note;
-import com.example.notebook.repository.NoteRepository;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 
-public class SqlRepository implements NoteRepository {
+public class SqlRepository extends BaseRepository {
 
-    private final NoteRepository noteRepository;
     private SQLiteDatabase db;
 
-    public SqlRepository(NoteRepository noteRepository, Context context) {
+    public SqlRepository(Context context) {
         db = context.openOrCreateDatabase("notebookdb.db", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS notes " +
                 "(id INTEGER PRIMARY KEY, " +
@@ -29,12 +26,11 @@ public class SqlRepository implements NoteRepository {
                 "description TEXT, " +
                 "eventTime DATE)");
 
-        this.noteRepository = noteRepository;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<Note> getAll() {
+    public List<Note> getAll(boolean onStartup) {
         List<Note> notes = new ArrayList<>();
         Cursor query = db.rawQuery("SELECT * FROM notes;", null);
         while (query.moveToNext()) {
@@ -51,16 +47,18 @@ public class SqlRepository implements NoteRepository {
             note.setId(id);
             notes.add(note);
         }
-
-        return notes;
+        super.notes = notes;
+        return super.getAll(onStartup);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void delete(int id) {
         db.execSQL("DELETE FROM notes WHERE id = ?;", new Object[]{id});
-        noteRepository.delete(id);
+        super.delete(id);
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean addNote(Note note, int currentId) {
         if (currentId != -1) {
@@ -76,15 +74,13 @@ public class SqlRepository implements NoteRepository {
             contentValues.put("eventTime", String.valueOf(note.getEventTime()));
             currentId = (int) db.insert("notes", "id", contentValues);
         }
-        return noteRepository.addNote(note, currentId);
+        return super.addNote(note, currentId);
     }
 
     @SuppressLint("NewApi")
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<Note> findNotes(String noteName) {
-        return getAll().stream()
-                .filter(note -> note.getName().contains(noteName))
-                .collect(Collectors.toList());
+        return super.findNotes(noteName);
     }
 }
