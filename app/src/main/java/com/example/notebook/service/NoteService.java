@@ -3,16 +3,15 @@ package com.example.notebook.service;
 import android.widget.ArrayAdapter;
 import com.example.notebook.model.Note;
 import com.example.notebook.repository.NoteRepository;
-
 import java.util.ArrayList;
 import java.util.List;
 
 
 public class NoteService {
+
     private NoteRepository noteRepository;
     private ArrayAdapter<Note> adapter;
     private static NoteService noteService;
-
 
     private NoteService() {
     }

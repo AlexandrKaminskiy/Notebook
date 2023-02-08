@@ -4,7 +4,6 @@ import android.content.Context;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import com.example.notebook.model.Note;
-
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;

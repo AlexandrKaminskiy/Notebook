@@ -16,8 +16,8 @@ import com.example.notebook.repository.NoteRepository;
 import com.example.notebook.repository.impl.FileBasedNoteRepository;
 import com.example.notebook.service.NoteService;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.util.List;
+
 
 public class MainActivity extends AppCompatActivity {
 

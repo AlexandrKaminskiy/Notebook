@@ -8,7 +8,6 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import com.example.notebook.model.Note;
-
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;

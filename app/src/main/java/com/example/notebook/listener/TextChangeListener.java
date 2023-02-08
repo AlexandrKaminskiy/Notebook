@@ -5,8 +5,8 @@ import android.text.TextWatcher;
 import android.widget.ArrayAdapter;
 import com.example.notebook.model.Note;
 import com.example.notebook.service.NoteService;
-
 import java.util.List;
+
 
 public class TextChangeListener implements TextWatcher {
 

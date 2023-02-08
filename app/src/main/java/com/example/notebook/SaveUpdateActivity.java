@@ -1,20 +1,16 @@
 package com.example.notebook;
 
 import android.content.Intent;
-import android.view.View;
+import android.os.Bundle;
 import android.widget.Button;
 import android.widget.DatePicker;
 import androidx.annotation.RequiresApi;
 import androidx.appcompat.app.AppCompatActivity;
-import android.os.Bundle;
 import com.example.notebook.model.Note;
-import com.example.notebook.repository.NoteRepository;
-import com.example.notebook.repository.impl.BaseRepository;
 import com.example.notebook.service.NoteService;
 import com.google.android.material.textfield.TextInputEditText;
-
 import java.time.LocalDate;
-import java.time.LocalDateTime;
+
 
 public class SaveUpdateActivity extends AppCompatActivity {
 

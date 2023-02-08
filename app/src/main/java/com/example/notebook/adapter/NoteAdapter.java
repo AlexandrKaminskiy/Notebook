@@ -9,8 +9,8 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import com.example.notebook.model.Note;
-
 import java.util.List;
+
 
 public class NoteAdapter extends ArrayAdapter<Note> {
     public NoteAdapter(@NonNull Context context, int resource, List<Note> list) {

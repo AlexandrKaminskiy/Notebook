@@ -3,9 +3,9 @@ package com.example.notebook.model;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
 import java.io.Serializable;
 import java.time.LocalDate;
+
 
 @NoArgsConstructor
 @Getter
