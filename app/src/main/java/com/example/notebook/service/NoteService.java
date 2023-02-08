@@ -14,8 +14,8 @@ public class NoteService {
     private ArrayAdapter<Note> adapter;
     private static NoteService noteService;
 
+
     private NoteService() {
-        noteRepository = BaseRepository.getInstance();
     }
 
     public static NoteService getInstance() {
@@ -24,6 +24,10 @@ public class NoteService {
         }
         noteService = new NoteService();
         return noteService;
+    }
+
+    public void setNoteRepository(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
     }
 
     public void setAdapter(ArrayAdapter<Note> adapter) {
@@ -39,8 +43,8 @@ public class NoteService {
         adapter.notifyDataSetChanged();
     }
 
-    public boolean addNote(Note note, Note currentNote) {
-        noteRepository.addNote(note, currentNote);
+    public boolean addNote(Note note, int currentId) {
+        noteRepository.addNote(note, currentId);
         adapter.notifyDataSetChanged();
         return true;
     }

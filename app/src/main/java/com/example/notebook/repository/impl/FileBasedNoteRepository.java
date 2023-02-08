@@ -19,7 +19,7 @@ public class FileBasedNoteRepository implements NoteRepository {
     }
 
     @Override
-    public boolean addNote(Note note, Note currentNote) {
+    public boolean addNote(Note note, int currentId) {
 
         try (FileOutputStream outputStream = new FileOutputStream("notes", true);
              ObjectOutputStream objectOutputStream = new ObjectOutputStream(outputStream)) {

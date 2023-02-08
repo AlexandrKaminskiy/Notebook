@@ -48,9 +48,10 @@ public class SaveUpdateActivity extends AppCompatActivity {
             startActivity(intent);
         });
         saveButton.setOnClickListener(v -> {
+            int id = currentNote == null ? -1 : currentNote.getId();
             noteService.addNote(new Note(noteNameEdit.getText().toString(),
                     noteDescriptionEdit.getText().toString(), LocalDate.of(datePicker.getYear(),
-                    datePicker.getMonth(),datePicker.getDayOfMonth())), currentNote);
+                    datePicker.getMonth(),datePicker.getDayOfMonth())), id);
             Intent intent = new Intent(this, MainActivity.class);
             startActivity(intent);
         });

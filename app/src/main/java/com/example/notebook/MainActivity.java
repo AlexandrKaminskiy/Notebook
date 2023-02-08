@@ -2,6 +2,8 @@ package com.example.notebook;
 
 import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.database.Cursor;
+import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import android.widget.*;
 import androidx.annotation.RequiresApi;
@@ -10,6 +12,8 @@ import android.os.Bundle;
 import com.example.notebook.adapter.NoteAdapter;
 import com.example.notebook.listener.TextChangeListener;
 import com.example.notebook.model.Note;
+import com.example.notebook.repository.impl.BaseRepository;
+import com.example.notebook.repository.impl.SqlRepository;
 import com.example.notebook.service.NoteService;
 import com.google.android.material.textfield.TextInputEditText;
 
@@ -17,7 +21,6 @@ import java.util.List;
 
 public class MainActivity extends AppCompatActivity {
 
-    private Button findButton;
     private ListView listView;
     private Button addButton;
     private NoteService noteService;
@@ -33,11 +36,10 @@ public class MainActivity extends AppCompatActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-        findButton = findViewById(R.id.findButton);
         listView = findViewById(R.id.listView);
         addButton = findViewById(R.id.addButton);
         findTextInput = findViewById(R.id.findTextInput);
-
+        noteService.setNoteRepository(new SqlRepository(new BaseRepository(), getBaseContext()));
         List<Note> list = noteService.getAll();
         ArrayAdapter<Note> adapter = new NoteAdapter(this,
                 android.R.layout.simple_list_item_1, list);

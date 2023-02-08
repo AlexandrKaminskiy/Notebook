@@ -11,21 +11,11 @@ import java.util.stream.Collectors;
 
 public class BaseRepository implements NoteRepository {
 
-    private static BaseRepository baseRepository;
-    private List<Note> notes;
+    protected List<Note> notes;
     private int id;
 
-
-    private BaseRepository() {
-        notes = new ArrayList<>();
-    }
-
-
-    public static BaseRepository getInstance() {
-        if (baseRepository != null) {
-            return baseRepository;
-        }
-        return new BaseRepository();
+    public BaseRepository() {
+        this.notes = new ArrayList<>();
     }
 
     @Override
@@ -41,21 +31,16 @@ public class BaseRepository implements NoteRepository {
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
-    public boolean addNote(Note note, Note currentNote) {
-        if (currentNote != null) {
-            int id = currentNote.getId();
-            notes.stream()
-                    .filter(n -> n.getId() == currentNote.getId())
-                    .forEach(n -> {
-                        n.setName(note.getName());
-                        n.setDescription(note.getDescription());
-                        n.setEventTime(note.getEventTime());
-                    });
-            note.setId(id);
-        } else {
-            note.setId(id++);
-            notes.add(note);
-        }
+    public boolean addNote(Note note, int currentId) {
+
+        notes.stream()
+                .filter(n -> n.getId() == currentId)
+                .forEach(n -> {
+                    n.setName(note.getName());
+                    n.setDescription(note.getDescription());
+                    n.setEventTime(note.getEventTime());
+                });
+
         return true;
     }
 
