@@ -8,7 +8,7 @@
         tools:context=".SaveUpdateActivity">
 
     <Button
-            android:text="Button"
+            android:text="Save"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content" android:id="@+id/saveButton"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintStart_toStartOf="parent"
@@ -21,37 +21,43 @@
             app:layout_constraintStart_toStartOf="parent"
             android:id="@+id/descriptionTextInputEdit"
             app:layout_constraintEnd_toEndOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.007"
-            app:layout_constraintVertical_bias="0.168"/>
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.206"
+            android:hint="description"
+            app:layout_constraintVertical_bias="0.277"/>
     <com.google.android.material.textfield.TextInputLayout
             android:layout_width="330dp"
             android:layout_height="0dp" tools:layout_editor_absoluteX="1dp"
             tools:layout_editor_absoluteY="58dp" android:id="@+id/textInputLayout" tools:ignore="MissingConstraints">
     </com.google.android.material.textfield.TextInputLayout>
 
-    <DatePicker
-            android:layout_width="349dp"
-            android:layout_height="407dp"
-            android:endYear="2100"
-            android:startYear="1900" tools:ignore="MissingConstraints"
-            android:id="@+id/datePicker"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintHorizontal_bias="0.0" app:layout_constraintVertical_bias="0.761">
-    </DatePicker>
     <com.google.android.material.textfield.TextInputEditText
             android:layout_width="331dp"
             android:layout_height="88dp"
-            tools:layout_editor_absoluteY="5dp"
+            tools:layout_editor_absoluteY="58dp"
             android:id="@+id/nameTextInputEdit"
             tools:ignore="MissingConstraints" app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.0"/>
+            android:hint="name"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintHorizontal_bias="0.112"/>
     <Button
             android:text="Delete"
             android:layout_width="79dp"
             android:layout_height="62dp" android:id="@+id/deleteButton"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintTop_toTopOf="parent" app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.996"
-            app:layout_constraintVertical_bias="0.046"/>
+            app:layout_constraintEnd_toEndOf="parent" app:layout_constraintHorizontal_bias="0.897"
+            app:layout_constraintVertical_bias="0.976"/>
+    <com.google.android.material.textfield.TextInputLayout
+            android:layout_width="282dp"
+            android:layout_height="56dp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent" app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent" app:layout_constraintHorizontal_bias="0.124"
+            app:layout_constraintVertical_bias="0.499">
+        <com.google.android.material.textfield.TextInputEditText
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:id="@+id/datePicker"
+                android:focusable="false"
+                android:hint="date"/>
+    </com.google.android.material.textfield.TextInputLayout>
 </androidx.constraintlayout.widget.ConstraintLayout>

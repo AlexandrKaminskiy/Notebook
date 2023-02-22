@@ -18,7 +18,7 @@ public class Note implements Serializable {
         this.eventTime = eventTime;
     }
 
-    private int id;
+    private Integer id;
     private String name;
     private String description;
     private LocalDate eventTime;

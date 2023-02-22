@@ -14,6 +14,7 @@ import com.example.notebook.listener.TextChangeListener;
 import com.example.notebook.model.Note;
 import com.example.notebook.repository.NoteRepository;
 import com.example.notebook.repository.impl.FileBasedNoteRepository;
+import com.example.notebook.repository.impl.SqlRepository;
 import com.example.notebook.service.NoteService;
 import com.google.android.material.textfield.TextInputEditText;
 import java.util.List;
@@ -25,13 +26,13 @@ public class MainActivity extends AppCompatActivity {
     private Button addButton;
     private NoteService noteService;
     private TextInputEditText findTextInput;
-    private NoteRepository noteRepository;
-    private boolean onStartup;
+    private FileBasedNoteRepository noteRepository;
+    private SqlRepository noteSqlRepository;
 
     public MainActivity() {
-        onStartup = true;
         noteService = NoteService.getInstance();
-        noteRepository = new FileBasedNoteRepository(getBaseContext());
+        noteSqlRepository = new SqlRepository();
+        noteRepository = new FileBasedNoteRepository(noteRepository);
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
@@ -43,10 +44,10 @@ public class MainActivity extends AppCompatActivity {
         listView = findViewById(R.id.listView);
         addButton = findViewById(R.id.addButton);
         findTextInput = findViewById(R.id.findTextInput);
-        noteRepository = new FileBasedNoteRepository(getBaseContext());
-        noteService.setNoteRepository(noteRepository);
-        List<Note> list = noteService.getAll(onStartup);
-        onStartup = false;
+        noteRepository.setContext(getBaseContext());
+        noteSqlRepository.setDb(getBaseContext());
+        noteService.setNoteRepository(noteSqlRepository);
+        List<Note> list = noteService.getAll();
         ArrayAdapter<Note> adapter = new NoteAdapter(this,
                 android.R.layout.simple_list_item_1, list);
 

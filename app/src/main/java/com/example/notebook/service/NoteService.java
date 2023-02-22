@@ -12,7 +12,7 @@ public class NoteService {
     private NoteRepository noteRepository;
     private ArrayAdapter<Note> adapter;
     private static NoteService noteService;
-
+    public static int counter = 1;
     private NoteService() {
     }
 
@@ -32,8 +32,8 @@ public class NoteService {
         this.adapter = adapter;
     }
 
-    public List<Note> getAll(boolean onStartup) {
-        return new ArrayList<>(noteRepository.getAll(onStartup));
+    public List<Note> getAll() {
+        return new ArrayList<>(noteRepository.getAll());
     }
 
     public void delete(int id) {

@@ -13,9 +13,6 @@
                 android:name=".SaveUpdateActivity"
                 android:exported="true"/>
         <activity
-                android:name=".NoteInfo"
-                android:exported="true"/>
-        <activity
                 android:name=".MainActivity"
                 android:exported="true">
             <intent-filter>
@@ -24,6 +21,8 @@
                 <category android:name="android.intent.category.LAUNCHER"/>
             </intent-filter>
         </activity>
+        
+        <receiver android:name=".service.ReminderBroadcast"/>
     </application>
 
 </manifest>

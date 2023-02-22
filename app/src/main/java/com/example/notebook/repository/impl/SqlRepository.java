@@ -8,6 +8,8 @@ import android.database.sqlite.SQLiteDatabase;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import com.example.notebook.model.Note;
+import com.example.notebook.repository.NoteRepository;
+
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -17,19 +19,19 @@ public class SqlRepository extends BaseRepository {
 
     private SQLiteDatabase db;
 
-    public SqlRepository(Context context) {
+
+    public void setDb(Context context) {
         db = context.openOrCreateDatabase("notebookdb.db", Context.MODE_PRIVATE, null);
         db.execSQL("CREATE TABLE IF NOT EXISTS notes " +
                 "(id INTEGER PRIMARY KEY, " +
                 "name TEXT, " +
                 "description TEXT, " +
                 "eventTime DATE)");
-
     }
 
     @RequiresApi(api = Build.VERSION_CODES.O)
     @Override
-    public List<Note> getAll(boolean onStartup) {
+    public List<Note> getAll() {
         List<Note> notes = new ArrayList<>();
         Cursor query = db.rawQuery("SELECT * FROM notes;", null);
         while (query.moveToNext()) {
@@ -47,7 +49,7 @@ public class SqlRepository extends BaseRepository {
             notes.add(note);
         }
         super.notes = notes;
-        return super.getAll(onStartup);
+        return super.getAll();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
@@ -72,6 +74,7 @@ public class SqlRepository extends BaseRepository {
             contentValues.put("description", note.getDescription());
             contentValues.put("eventTime", String.valueOf(note.getEventTime()));
             currentId = (int) db.insert("notes", "id", contentValues);
+            super.notes.add(note);
         }
         return super.addNote(note, currentId);
     }

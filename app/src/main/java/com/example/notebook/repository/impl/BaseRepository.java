@@ -19,7 +19,7 @@ public class BaseRepository implements NoteRepository {
     }
 
     @Override
-    public List<Note> getAll(boolean onStartup) {
+    public List<Note> getAll() {
         return notes;
     }
 
@@ -33,18 +33,15 @@ public class BaseRepository implements NoteRepository {
     @Override
     public boolean addNote(Note note, int currentId) {
 
-        if (currentId == -1) {
-            note.setId(++id);
-            notes.add(note);
-        } else {
-            notes.stream()
-                    .filter(n -> n.getId() == currentId)
-                    .forEach(n -> {
-                        n.setName(note.getName());
-                        n.setDescription(note.getDescription());
-                        n.setEventTime(note.getEventTime());
-                    });
-        }
+
+        notes.stream()
+                .filter(n -> n.getId() == currentId)
+                .forEach(n -> {
+                    n.setName(note.getName());
+                    n.setDescription(note.getDescription());
+                    n.setEventTime(note.getEventTime());
+                });
+
 
         return true;
     }

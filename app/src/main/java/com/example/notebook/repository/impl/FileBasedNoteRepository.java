@@ -4,49 +4,59 @@ import android.content.Context;
 import android.os.Build;
 import androidx.annotation.RequiresApi;
 import com.example.notebook.model.Note;
+import com.example.notebook.repository.NoteRepository;
+
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class FileBasedNoteRepository extends BaseRepository {
 
-    private final Context context;
+    private final NoteRepository noteRepository;
 
-    public FileBasedNoteRepository(Context context) {
-        this.context = context;
+    public FileBasedNoteRepository(NoteRepository noteRepository) {
+        this.noteRepository = noteRepository;
     }
 
     @Override
-    public List<Note> getAll(boolean onStartup) {
+    public List<Note> getAll() {
 
         List<Note> notes = new ArrayList<>();
 
         try (FileInputStream inputStream = context.openFileInput("notes");
              ObjectInputStream objectInputStream = new ObjectInputStream(inputStream)) {
             Note note;
+
             while ((note = (Note) objectInputStream.readObject()) != null) {
+
                 notes.add(note);
             }
 
         } catch (IOException | ClassNotFoundException e) {
             e.printStackTrace();
         }
-        super.notes = notes;
 
-        return super.getAll(onStartup);
+
+        return noteRepository.getAll();
+    }
+
+    private Context context;
+
+    public void setContext(Context context) {
+        this.context = context;
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public void delete(int id) {
-        super.delete(id);
+        noteRepository.delete(id);
         save();
     }
 
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public boolean addNote(Note note, int currentId) {
-        super.addNote(note, currentId);
+        noteRepository.addNote(note, currentId);
         save();
         return true;
     }
@@ -54,7 +64,7 @@ public class FileBasedNoteRepository extends BaseRepository {
     @RequiresApi(api = Build.VERSION_CODES.N)
     @Override
     public List<Note> findNotes(String noteName) {
-        return super.findNotes(noteName);
+        return noteRepository.findNotes(noteName);
     }
 
 
